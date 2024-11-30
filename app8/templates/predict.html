@@ -1,0 +1,349 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Global styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('{% static 'img/newwea.webp' %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* Centered container styling */
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        /* Header styling */
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Form input styling */
+        .input-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .input-form input:focus {
+            outline: none;
+            border-color: #004095;
+        }
+
+        /* Submit button styling */
+        .input-form button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .input-form button:hover {
+            background-color: #004095;
+        }
+
+        /* Result box styling */
+        .prediction-result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f0f1f3;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-result h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .prediction-result p {
+            font-size: 1.2rem;
+            margin: 12px 0;
+            color: #555;
+        }
+
+        .prediction-result ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .prediction-result li {
+            font-size: 1.1rem;
+            color: #555;
+            margin: 8px 0;
+        }
+
+        .prediction-result li strong {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Footer prompt */
+        p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Prediction</h1>
+        <form method="POST" class="input-form">
+            {% csrf_token %}
+            <input type="number" name="precipitation" placeholder="Precipitation (%)" required>
+            <input type="number" name="temp_max" placeholder="Max Temperature (°C)" required>
+            <input type="number" name="temp_min" placeholder="Min Temperature (°C)" required>
+            <input type="number" name="wind" placeholder="Wind Speed (km/h)" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="prediction-result">
+            <h2>Weather Prediction Result</h2>
+            <p><strong>Condition:</strong> {{ prediction }}</p>
+            <p><strong>Details:</strong></p>
+            <ul>
+                <li><strong>Precipitation:</strong> {{ input_data.precipitation }}%</li>
+                <li><strong>Max Temp:</strong> {{ input_data.temp_max }}°C</li>
+                <li><strong>Min Temp:</strong> {{ input_data.temp_min }}°C</li>
+                <li><strong>Wind Speed:</strong> {{ input_data.wind }} km/h</li>
+            </ul>
+        </div>
+        {% else %}
+        <p>Enter the details above to predict the weather.</p>
+        {% endif %}
+    </div>
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Global styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('{% static 'img/newwea.webp' %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* Centered container styling */
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        /* Header styling */
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Form input styling */
+        .input-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .input-form input:focus {
+            outline: none;
+            border-color: #004095;
+        }
+
+        /* Submit button styling */
+        .input-form button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .input-form button:hover {
+            background-color: #004095;
+        }
+
+        /* Result box styling */
+        .prediction-result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: white;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .prediction-result h2 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .prediction-result p {
+            font-size: 1.2rem;
+            margin: 12px 0;
+            color: #fff;
+        }
+
+        .prediction-result ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .prediction-result li {
+            font-size: 1.1rem;
+            color: #fff;
+            margin: 8px 0;
+        }
+
+        .prediction-result li strong {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Footer prompt */
+        p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Prediction</h1>
+        <form method="POST" class="input-form">
+            {% csrf_token %}
+            <input type="number" name="precipitation" placeholder="Precipitation (%)" required>
+            <input type="number" name="temp_max" placeholder="Max Temperature (°C)" required>
+            <input type="number" name="temp_min" placeholder="Min Temperature (°C)" required>
+            <input type="number" name="wind" placeholder="Wind Speed (km/h)" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="prediction-result" 
+            {% if prediction == 'Sun' %}
+                style="background-image: url('{% static 'img/sun.jpg' %}')"
+            {% elif prediction == 'Rain' %}
+                style="background-image: url('{% static 'img/rain2.jpg' %}')"
+            {% elif prediction == 'Drizzle' %}
+                style="background-image: url('{% static 'img/drizzle.jpg' %}')"
+            {% endif %}>
+            <h2>Weather Prediction Result</h2>
+            <p><strong>Condition:</strong> {{ prediction }}</p>
+            <p><strong>Details:</strong></p>
+            <ul>
+                <li><strong>Precipitation:</strong> {{ input_data.precipitation }}%</li>
+                <li><strong>Max Temp:</strong> {{ input_data.temp_max }}°C</li>
+                <li><strong>Min Temp:</strong> {{ input_data.temp_min }}°C</li>
+                <li><strong>Wind Speed:</strong> {{ input_data.wind }} km/h</li>
+            </ul>
+        </div>
+        {% else %}
+        <p>Enter the details above to predict the weather.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
